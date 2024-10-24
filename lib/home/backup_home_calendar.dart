@@ -54,9 +54,9 @@ class _HomeCalendarState extends State<HomeCalendar> with TickerProviderStateMix
     _fetchCarBookings();
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     const AndroidInitializationSettings initializationSettingsAndroid =
-    AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('@mipmap/ic_launcher');
     const InitializationSettings initializationSettings =
-    InitializationSettings(android: initializationSettingsAndroid);
+        InitializationSettings(android: initializationSettingsAndroid);
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
     _animationController = AnimationController(
       vsync: this,
@@ -126,7 +126,9 @@ class _HomeCalendarState extends State<HomeCalendar> with TickerProviderStateMix
             category: 'Leave Requests',
             uid: uid,
           );
-          for (var day = startDate; day.isBefore(endDate.add(const Duration(days: 1))); day = day.add(const Duration(days: 1))) {
+          for (var day = startDate;
+              day.isBefore(endDate.add(const Duration(days: 1)));
+              day = day.add(const Duration(days: 1))) {
             final normalizedDay = _normalizeDate(day);
             if (approvalEvents.containsKey(normalizedDay)) {
               if (!approvalEvents[normalizedDay]!.any((e) => e.uid == event.uid)) {
@@ -143,7 +145,8 @@ class _HomeCalendarState extends State<HomeCalendar> with TickerProviderStateMix
           _filterAndSearchEvents();
         });
       } else {
-        _showErrorDialog('Failed to Load Leave Requests', 'Server returned status code: ${response.statusCode}. Message: ${response.reasonPhrase}');
+        _showErrorDialog('Failed to Load Leave Requests',
+            'Server returned status code: ${response.statusCode}. Message: ${response.reasonPhrase}');
       }
     } catch (e) {
       _showErrorDialog('Error Fetching Leave Requests', 'An unexpected error occurred: $e');
@@ -214,7 +217,9 @@ class _HomeCalendarState extends State<HomeCalendar> with TickerProviderStateMix
             outmeetingUid: item['outmeeting_uid'] ?? '',
             category: 'Meetings',
           );
-          for (var day = startDate; day.isBefore(endDate.add(const Duration(days: 1))); day = day.add(const Duration(days: 1))) {
+          for (var day = startDate;
+              day.isBefore(endDate.add(const Duration(days: 1)));
+              day = day.add(const Duration(days: 1))) {
             final normalizedDay = _normalizeDate(day);
             if (meetingEvents.containsKey(normalizedDay)) {
               if (!meetingEvents[normalizedDay]!.any((e) => e.uid == event.uid)) {
@@ -231,7 +236,8 @@ class _HomeCalendarState extends State<HomeCalendar> with TickerProviderStateMix
           _filterAndSearchEvents();
         });
       } else {
-        _showErrorDialog('Failed to Load Meetings', 'Server returned status code: ${response.statusCode}. Message: ${response.reasonPhrase}');
+        _showErrorDialog('Failed to Load Meetings',
+            'Server returned status code: ${response.statusCode}. Message: ${response.reasonPhrase}');
       }
     } catch (e) {
       _showErrorDialog('Error Fetching Meetings', 'An unexpected error occurred: $e');
@@ -287,7 +293,9 @@ class _HomeCalendarState extends State<HomeCalendar> with TickerProviderStateMix
             category: 'Meeting Room Bookings',
             uid: uid,
           );
-          for (var day = startDate; day.isBefore(endDate.add(const Duration(days: 1))); day = day.add(const Duration(days: 1))) {
+          for (var day = startDate;
+              day.isBefore(endDate.add(const Duration(days: 1)));
+              day = day.add(const Duration(days: 1))) {
             final normalizedDay = _normalizeDate(day);
             if (bookingEvents.containsKey(normalizedDay)) {
               if (!bookingEvents[normalizedDay]!.any((e) => e.uid == event.uid)) {
@@ -304,7 +312,8 @@ class _HomeCalendarState extends State<HomeCalendar> with TickerProviderStateMix
           _filterAndSearchEvents();
         });
       } else {
-        _showErrorDialog('Failed to Load Meeting Room Bookings', 'Server returned status code: ${response.statusCode}. Message: ${response.reasonPhrase}');
+        _showErrorDialog('Failed to Load Meeting Room Bookings',
+            'Server returned status code: ${response.statusCode}. Message: ${response.reasonPhrase}');
       }
     } catch (e) {
       _showErrorDialog('Error Fetching Meeting Room Bookings', 'An unexpected error occurred: $e');
@@ -360,7 +369,9 @@ class _HomeCalendarState extends State<HomeCalendar> with TickerProviderStateMix
             category: 'Car Bookings',
             uid: uid,
           );
-          for (var day = startDate; day.isBefore(endDate.add(const Duration(days: 1))); day = day.add(const Duration(days: 1))) {
+          for (var day = startDate;
+              day.isBefore(endDate.add(const Duration(days: 1)));
+              day = day.add(const Duration(days: 1))) {
             final normalizedDay = _normalizeDate(day);
             if (carEvents.containsKey(normalizedDay)) {
               if (!carEvents[normalizedDay]!.any((e) => e.uid == event.uid)) {
@@ -377,7 +388,8 @@ class _HomeCalendarState extends State<HomeCalendar> with TickerProviderStateMix
           _filterAndSearchEvents();
         });
       } else {
-        _showErrorDialog('Failed to Load Car Bookings', 'Server returned status code: ${response.statusCode}. Message: ${response.reasonPhrase}');
+        _showErrorDialog('Failed to Load Car Bookings',
+            'Server returned status code: ${response.statusCode}. Message: ${response.reasonPhrase}');
       }
     } catch (e) {
       _showErrorDialog('Error Fetching Car Bookings', 'An unexpected error occurred: $e');
@@ -449,8 +461,7 @@ class _HomeCalendarState extends State<HomeCalendar> with TickerProviderStateMix
       dayEvents = dayEvents.where((event) {
         final eventTitle = event.title.toLowerCase();
         final eventDescription = event.description.toLowerCase();
-        return eventTitle.contains(_searchQuery.toLowerCase()) ||
-            eventDescription.contains(_searchQuery.toLowerCase());
+        return eventTitle.contains(_searchQuery.toLowerCase()) || eventDescription.contains(_searchQuery.toLowerCase());
       }).toList();
     }
     setState(() {
@@ -470,15 +481,15 @@ class _HomeCalendarState extends State<HomeCalendar> with TickerProviderStateMix
         data: event.title,
       );
     }).toList();
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => TimetablePage(
-          date: selectedDay,
-          events: timetableItems,
-        ),
-      ),
-    );
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => TimetablePage(
+    //       date: selectedDay,
+    //       events: timetableItems,
+    //     ),
+    //   ),
+    // );
   }
 
   void _showErrorDialog(String title, String message) {
@@ -627,15 +638,15 @@ class _HomeCalendarState extends State<HomeCalendar> with TickerProviderStateMix
   }
 
   void _addEvent(
-      String title,
-      DateTime startDateTime,
-      DateTime endDateTime,
-      String description, {
-        required String status,
-        required bool isMeeting,
-        required String category,
-        required String uid,
-      }) {
+    String title,
+    DateTime startDateTime,
+    DateTime endDateTime,
+    String description, {
+    required String status,
+    required bool isMeeting,
+    required String category,
+    required String uid,
+  }) {
     final newEvent = Event(
       title,
       startDateTime,
@@ -757,7 +768,8 @@ class _HomeCalendarState extends State<HomeCalendar> with TickerProviderStateMix
                 _filterAndSearchEvents();
               });
             },
-            selectedColor: getEventColor(Event('', DateTime.now(), DateTime.now(), '', status: '', isMeeting: false, category: category, uid: '')),
+            selectedColor: getEventColor(Event('', DateTime.now(), DateTime.now(), '',
+                status: '', isMeeting: false, category: category, uid: '')),
             checkmarkColor: Colors.white,
             labelStyle: TextStyle(
               color: _selectedCategory == category ? Colors.white : Colors.black,
@@ -949,29 +961,29 @@ class _HomeCalendarState extends State<HomeCalendar> with TickerProviderStateMix
                             child: hourEvents.isEmpty
                                 ? const SizedBox()
                                 : Wrap(
-                              spacing: 4,
-                              runSpacing: 4,
-                              children: hourEvents.map((event) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    _showEventDetailModal(event);
-                                  },
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width - 80,
-                                    padding: const EdgeInsets.all(8.0),
-                                    decoration: BoxDecoration(
-                                      color: getEventColor(event).withOpacity(0.7),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Text(
-                                      event.title,
-                                      style: const TextStyle(color: Colors.white, fontSize: 12),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
+                                    spacing: 4,
+                                    runSpacing: 4,
+                                    children: hourEvents.map((event) {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          _showEventDetailModal(event);
+                                        },
+                                        child: Container(
+                                          width: MediaQuery.of(context).size.width - 80,
+                                          padding: const EdgeInsets.all(8.0),
+                                          decoration: BoxDecoration(
+                                            color: getEventColor(event).withOpacity(0.7),
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          child: Text(
+                                            event.title,
+                                            style: const TextStyle(color: Colors.white, fontSize: 12),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
                                   ),
-                                );
-                              }).toList(),
-                            ),
                           ),
                         ),
                       ],
@@ -994,8 +1006,7 @@ class GradientAnimationLine extends StatefulWidget {
   _GradientAnimationLineState createState() => _GradientAnimationLineState();
 }
 
-class _GradientAnimationLineState extends State<GradientAnimationLine>
-    with SingleTickerProviderStateMixin {
+class _GradientAnimationLineState extends State<GradientAnimationLine> with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<Color?> _colorAnimation1;
   late final Animation<Color?> _colorAnimation2;
@@ -1070,23 +1081,23 @@ class Event {
   final String category;
 
   Event(
-      this.title,
-      this.startDateTime,
-      this.endDateTime,
-      this.description, {
-        required this.status,
-        required this.isMeeting,
-        this.location,
-        this.createdBy,
-        this.imgName,
-        this.createdAt,
-        required this.uid,
-        this.isRepeat,
-        this.videoConference,
-        this.backgroundColor,
-        this.outmeetingUid,
-        required this.category,
-      });
+    this.title,
+    this.startDateTime,
+    this.endDateTime,
+    this.description, {
+    required this.status,
+    required this.isMeeting,
+    this.location,
+    this.createdBy,
+    this.imgName,
+    this.createdAt,
+    required this.uid,
+    this.isRepeat,
+    this.videoConference,
+    this.backgroundColor,
+    this.outmeetingUid,
+    required this.category,
+  });
 
   String get formattedTime => DateFormat.jm().format(startDateTime);
 
